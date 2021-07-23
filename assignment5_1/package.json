@@ -1,0 +1,31 @@
+{
+  "name": "assignments",
+  "version": "1.0.0",
+  "description": "Assignment 1 for day 5. CRUD app for mean games without publisher, reviews",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganzorig/CS572.git"
+  },
+  "keywords": [
+    "mongoose",
+    "crud",
+    "headless",
+    "mongodb"
+  ],
+  "author": "Ganzorig Bayarsaikhan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ganzorig/CS572/issues"
+  },
+  "homepage": "https://github.com/ganzorig/CS572#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3"
+  }
+}
