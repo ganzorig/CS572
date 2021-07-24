@@ -20,7 +20,10 @@ router
 router
   .route('/games/:gameId/publisher')
   .get(controllerPublisher.publisherGetOne)
-  .post(controllerPublisher.publisherAdd);
+  .post(controllerPublisher.publisherAdd)
+  .put(controllerPublisher.publisherFullUpdateOne)
+  .patch(controllerPublisher.publisherPartialUpdateOne)
+  .delete(controllerPublisher.publisherDelete);
 
 router
   .route('/games/:gameId/reviews')
@@ -29,6 +32,9 @@ router
 
 router
   .route('/games/:gameId/reviews/:reviewId')
-  .get(controllerReviews.reviewGetOne);
+  .get(controllerReviews.reviewGetOne)
+  .put(controllerReviews.reviewFullUpdateOne)
+  .patch(controllerReviews.reviewPartialUpdateOne)
+  .delete(controllerReviews.reviewDelete);
 
 module.exports = router;

@@ -39,7 +39,7 @@ module.exports.getStudentOneCourse = function (req, res) {
           message: 'Student not found with ID:' + studentId,
         };
       } else {
-        response.message = student.courses.find((c) => c._id === courseId);
+        response.message = student.courses.id(courseId);
       }
       res.status(response.status).json(response.message);
     });
@@ -54,7 +54,6 @@ const _addCourse = function (req, res, student) {
     teacher: req.body.teacher,
   };
 
-  console.log(student.course);
   student.courses.push(newCourse);
 
   student.save(function (err, savedStudent) {
@@ -115,8 +114,8 @@ module.exports.deleteCourse = function (req, res) {
       response.message = err;
     }
 
-    const removedCourses = student.courses.filter((c) => c._id !== courseId);
-    student.courses = removedCourses;
+    const course = student.courses.id(courseId);
+    course.remove();
 
     student.save(function (err, updatedStudent) {
       if (err) {

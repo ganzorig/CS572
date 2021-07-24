@@ -161,47 +161,46 @@ const _updateGameProperties = function (req, game, isFullUpdate) {
     if (req.body.designer) {
       game.designers = [req.body.designer];
     }
-    // not update reviews and publisher
-    game.publisher = game.publisher;
-    game.reviews = game.reviews;
   }
 };
 
 const _updateGame = function (req, res, isFullUpdate) {
   const gameId = req.params.gameId;
 
-  Game.findById(gameId).exec(function (err, game) {
-    const response = {
-      status: 204,
-      message: game,
-    };
+  Game.findById(gameId)
+    .select('-reviews -publisher')
+    .exec(function (err, game) {
+      const response = {
+        status: 204,
+        message: game,
+      };
 
-    if (err) {
-      response.status = 500;
-      response.message = err;
-    } else if (!game) {
-      response.status = 400;
-      response.message = { message: 'Not found game with given ID' };
-    }
+      if (err) {
+        response.status = 500;
+        response.message = err;
+      } else if (!game) {
+        response.status = 400;
+        response.message = { message: 'Not found game with given ID' };
+      }
 
-    if (response.status !== 204) {
-      res.status(response.status).json(response.message);
-    } else {
-      _updateGameProperties(req, game, isFullUpdate);
-
-      game.save(function (err, updateGame) {
-        if (err) {
-          response.status = 500;
-          response.message = err;
-        } else {
-          response.status = 200;
-          response.message = updateGame;
-        }
-
+      if (response.status !== 204) {
         res.status(response.status).json(response.message);
-      });
-    }
-  });
+      } else {
+        _updateGameProperties(req, game, isFullUpdate);
+
+        game.save(function (err, updateGame) {
+          if (err) {
+            response.status = 500;
+            response.message = err;
+          } else {
+            response.status = 200;
+            response.message = updateGame;
+          }
+
+          res.status(response.status).json(response.message);
+        });
+      }
+    });
 };
 
 module.exports.gameFullUpdateOne = function (req, res) {

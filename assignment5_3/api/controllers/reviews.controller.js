@@ -9,7 +9,6 @@ const _addReview = function (req, res, game) {
     date: new Date(),
   };
 
-  console.log(game.reviews);
   game.reviews.push(newReview);
 
   game.save(function (err, savedGame) {
@@ -48,7 +47,6 @@ module.exports.reviewGetAll = function (req, res) {
 module.exports.reviewGetOne = function (req, res) {
   const gameId = req.params.gameId;
   const reviewId = req.params.reviewId;
-  console.log('asdasd');
 
   Game.findById(gameId).exec(function (err, game) {
     const response = { status: 200, message: game };
@@ -59,7 +57,7 @@ module.exports.reviewGetOne = function (req, res) {
       response.status = 404;
       response.message = { message: 'Game not found with ID:' + gameId };
     } else {
-      response.message = game.reviews.find((r) => r._id === reviewId);
+      response.message = game.reviews.id(reviewId);
     }
 
     res.status(response.status).json(response.message);
@@ -90,6 +88,112 @@ module.exports.reviewAdd = function (req, res) {
         _addReview(req, res, game);
       } else {
         res.status(response.status).json(response.message);
+      }
+    });
+};
+
+const _updateReviewProperties = function (req, game, isFullUpdate) {
+  const reviewId = req.params.reviewId;
+  const review = game.reviews.id(reviewId);
+
+  review.date = new Date();
+
+  if (isFullUpdate) {
+    review.name = req.body.name;
+    review.review = req.body.review;
+  } else {
+    if (req.body.name) {
+      review.name = req.body.name;
+    }
+    if (req.body.review) {
+      review.review = req.body.review;
+    }
+  }
+};
+
+const _updateReview = function (req, res, isFullUpdate) {
+  const gameId = req.params.gameId;
+
+  Game.findById(gameId)
+    .select('-publisher')
+    .exec(function (err, game) {
+      const response = {
+        status: 204,
+        message: game,
+      };
+
+      if (err) {
+        response.status = 500;
+        response.message = err;
+      } else if (!game) {
+        response.status = 400;
+        response.message = { message: 'Not found game with given ID' };
+      }
+
+      if (response.status !== 204) {
+        res.status(response.status).json(response.message);
+      } else {
+        _updateReviewProperties(req, game, isFullUpdate);
+
+        game.save(function (err, updateGame) {
+          if (err) {
+            response.status = 500;
+            response.message = err;
+          } else {
+            response.status = 200;
+            response.message = updateGame;
+          }
+
+          res.status(response.status).json(response.message);
+        });
+      }
+    });
+};
+
+module.exports.reviewFullUpdateOne = function (req, res) {
+  console.log('PUT one game json');
+  _updateReview(req, res, true);
+};
+
+module.exports.reviewPartialUpdateOne = function (req, res) {
+  console.log('PATCH one game json');
+  _updateReview(req, res, false);
+};
+
+const _deleteReview = function (req, res, game) {
+  const reviewId = req.params.reviewId;
+  const review = game.reviews.id(reviewId);
+
+  review.remove();
+  game.save(function (err, game) {
+    const response = { status: 204, message: game };
+    if (err) {
+      response.status = 500;
+      response.message = err;
+    }
+    res.status(response.status).json(response.message);
+  });
+};
+
+module.exports.reviewDelete = function (req, res) {
+  console.log('DELETE one review json');
+  const gameId = req.params.gameId;
+
+  Game.findById(gameId)
+    .select('-publisher')
+    .exec(function (err, game) {
+      const response = { status: 204 };
+      if (err) {
+        response.status = 500;
+        response.message = err;
+      } else if (!game) {
+        response.status = 404;
+        response.message = { message: 'Game not found given ID' };
+      }
+      if (response.status !== 204) {
+        res.status(response.status).json(response.message);
+      } else {
+        _deleteReview(req, res, game);
       }
     });
 };

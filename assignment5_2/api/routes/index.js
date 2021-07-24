@@ -19,6 +19,9 @@ router
 router
   .route('/games/:gameId/publisher')
   .get(controllerPublisher.publisherGetOne)
-  .post(controllerPublisher.publisherAdd);
+  .post(controllerPublisher.publisherAdd)
+  .put(controllerPublisher.publisherFullUpdateOne)
+  .patch(controllerPublisher.publisherPartialUpdateOne)
+  .delete(controllerPublisher.publisherDelete);
 
 module.exports = router;
