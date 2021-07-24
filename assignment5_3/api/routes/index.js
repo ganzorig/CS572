@@ -24,7 +24,11 @@ router
 
 router
   .route('/games/:gameId/reviews')
-  .get(controllerReviews.reviewGetOne)
+  .get(controllerReviews.reviewGetAll)
   .post(controllerReviews.reviewAdd);
+
+router
+  .route('/games/:gameId/reviews/:reviewId')
+  .get(controllerReviews.reviewGetOne);
 
 module.exports = router;

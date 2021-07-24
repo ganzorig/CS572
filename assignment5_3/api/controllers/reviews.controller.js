@@ -27,7 +27,7 @@ const _addReview = function (req, res, game) {
   });
 };
 
-module.exports.reviewGetOne = function (req, res) {
+module.exports.reviewGetAll = function (req, res) {
   const gameId = req.params.gameId;
 
   Game.findById(gameId).exec(function (err, game) {
@@ -41,6 +41,27 @@ module.exports.reviewGetOne = function (req, res) {
     } else {
       response.message = game.reviews ? game.reviews : [];
     }
+    res.status(response.status).json(response.message);
+  });
+};
+
+module.exports.reviewGetOne = function (req, res) {
+  const gameId = req.params.gameId;
+  const reviewId = req.params.reviewId;
+  console.log('asdasd');
+
+  Game.findById(gameId).exec(function (err, game) {
+    const response = { status: 200, message: game };
+    if (err) {
+      response.status = 500;
+      response.message = err;
+    } else if (!game) {
+      response.status = 404;
+      response.message = { message: 'Game not found with ID:' + gameId };
+    } else {
+      response.message = game.reviews.find((r) => r._id === reviewId);
+    }
+
     res.status(response.status).json(response.message);
   });
 };
