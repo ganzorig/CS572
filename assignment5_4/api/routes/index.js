@@ -24,6 +24,8 @@ router
 router
   .route('/students/:studentId/courses/:courseId')
   .get(courseController.getStudentOneCourse)
+  .put(courseController.updateFullOneCourse)
+  .patch(courseController.updatePartialOneCourse)
   .delete(courseController.deleteCourse);
 
 module.exports = router;

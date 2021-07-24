@@ -130,3 +130,75 @@ module.exports.deleteCourse = function (req, res) {
     });
   });
 };
+
+const _updateCourseProperties = function (req, student, isFullUpdate) {
+  const courseId = req.params.courseId;
+  const course = student.courses.id(courseId);
+
+  if (isFullUpdate) {
+    course.name = req.body.name;
+    course.code = req.body.code;
+    course.credit = parseInt(req.body.credit);
+    course.teacher = req.body.teacher;
+  } else {
+    if (req.body.name) {
+      course.name = req.body.name;
+    }
+    if (req.body.code) {
+      course.code = req.body.code;
+    }
+    if (req.body.credit) {
+      course.credit = parseInt(req.body.credit);
+    }
+    if (req.body.teacher) {
+      course.teacher = req.body.teacher;
+    }
+  }
+};
+
+const _updateCourse = function (req, res, isFullUpdate) {
+  const studentId = req.params.studentId;
+
+  Student.findById(studentId).exec(function (err, student) {
+    const response = {
+      status: 204,
+      message: student,
+    };
+
+    if (err) {
+      response.status = 500;
+      response.message = err;
+    } else if (!student) {
+      response.status = 400;
+      response.message = { message: 'Not found student with given ID' };
+    }
+
+    if (response.status !== 204) {
+      res.status(response.status).json(response.message);
+    } else {
+      _updateCourseProperties(req, student, isFullUpdate);
+
+      student.save(function (err, updateStudent) {
+        if (err) {
+          response.status = 500;
+          response.message = err;
+        } else {
+          response.status = 200;
+          response.message = updateStudent;
+        }
+
+        res.status(response.status).json(response.message);
+      });
+    }
+  });
+};
+
+module.exports.updateFullOneCourse = function (req, res) {
+  console.log('PUT one course json');
+  _updateCourse(req, res, true);
+};
+
+module.exports.updatePartialOneCourse = function (req, res) {
+  console.log('PATCH one course json');
+  _updateCourse(req, res, false);
+};
