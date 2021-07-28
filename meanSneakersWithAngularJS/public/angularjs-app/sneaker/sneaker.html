@@ -1,0 +1,57 @@
+<div class="d-flex w-100 justify-content-between align-items-center">
+  <h1>{{vm.sneaker.name}}</h1>
+  
+</div>
+<div class="card mb-3">
+
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title">Price</h4>
+      <div class="lead">{{vm.sneaker.price | currency}}</div>
+    </div>
+    <p class="card-text text-muted">{{vm.sneaker.description}}</p>
+ 
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Brand
+      <span class="badge bg-light rounded-pill">{{vm.sneaker.brand}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Release year
+      <span class="badge bg-info rounded-pill">{{vm.sneaker.releaseYear}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Color
+      <span class="badge bg-primary rounded-pill">{{vm.sneaker.color}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Size
+      <span class="badge bg-warning rounded-pill">{{vm.sneaker.usSize}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Gender
+      <span class="badge bg-dark rounded-pill">{{vm.sneaker.gender}}</span>
+    </li>
+    
+  </ul>
+  
+  <div ng-if="vm.sneaker.images.length > 0" class="card-footer text-muted sneaker-images">
+    <img src={{image}} ng-repeat="image in vm.sneaker.images" />
+  </div>
+</div>
+
+<div class="card mb-3" ng-if="vm.sneaker.reviews.length > 0">
+  <h5 class="card-header">Reviews</h5>
+  <ul class="list-group">
+    <li ng-repeat="review in vm.sneaker.reviews" class="list-group-item">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">{{review.title}} 
+          <span class="text-warning" ng-repeat="star in vm.getStars(review.rate) track by $index">&#9733;</span></h6>
+        <small>{{review.date | date}}</small>
+      </div>
+      <p class="mb-1 text-muted">{{review.review}}</p>
+    </li>
+  </ul>
+</div>

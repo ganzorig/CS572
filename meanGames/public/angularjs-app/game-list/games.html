@@ -1,0 +1,11 @@
+<h1>Mean games</h1>
+
+<div class="list-group">
+  <a 
+    ng-repeat="game in vm.games" 
+    class="list-group-item list-group-item-action" 
+    href="/#!/games/{{game._id}}"
+  >
+    {{game.title}}
+  </a>
+</div>
