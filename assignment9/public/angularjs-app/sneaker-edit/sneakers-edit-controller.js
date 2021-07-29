@@ -10,7 +10,7 @@ function SneakerEditController($routeParams, SneakersFactory) {
     vm.formSneaker = response.data;
   });
 
-  vm.addSneaker = function () {
+  vm.updateSneaker = function () {
     if (vm.sneakerForm.$valid) {
       SneakersFactory.updateOneSneaker(sneakerId, vm.formSneaker)
         .then(function (response) {

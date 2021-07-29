@@ -1,0 +1,35 @@
+{
+  "name": "assignments",
+  "version": "1.0.0",
+  "description": "Assignment 2 for day 5",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganzorig/CS572.git"
+  },
+  "keywords": [
+    "crud",
+    "mongoose",
+    "headless",
+    "mongodb"
+  ],
+  "author": "Ganzorig Bayarsaikhan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ganzorig/CS572/issues"
+  },
+  "homepage": "https://github.com/ganzorig/CS572#readme",
+  "dependencies": {
+    "angular": "^1.8.2",
+    "angular-route": "^1.8.2",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.3"
+  }
+}
