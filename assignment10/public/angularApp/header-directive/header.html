@@ -1,0 +1,24 @@
+<div ng-controller="JobsController as vm" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <div class="container">
+    <a href="/" class="navbar-brand">meanJobs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#!/jobs?count=0">All jobs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Latest jobs</a>
+        </li>
+      </ul>
+      <div class="navbar-nav ms-md-auto">
+        <form class="d-flex" ng-submit="vm.search()">
+          <input class="form-control me-sm-2" type="text" placeholder="Search" ng-model="vm.search.keyword" autocapitalize="none">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
