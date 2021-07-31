@@ -11,9 +11,7 @@ function JobsController($location, JobsFactory, $window) {
   vm.search = {};
 
   vm.search = function () {
-    console.log(vm.search.keyword);
     JobsFactory.getAllJobs(count, vm.search.keyword).then(function (response) {
-      vm.jobs = [];
       vm.jobs = response.data;
     });
   };

@@ -1,4 +1,4 @@
-<div ng-controller="JobsController as vm" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
   <div class="container">
     <a href="/" class="navbar-brand">meanJobs</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,12 +13,12 @@
           <a class="nav-link" href="/">Latest jobs</a>
         </li>
       </ul>
-      <div class="navbar-nav ms-md-auto">
-        <form class="d-flex" ng-submit="vm.search()">
-          <input class="form-control me-sm-2" type="text" placeholder="Search" ng-model="vm.search.keyword" autocapitalize="none">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
+      <ul class="navbar-nav ms-md-auto">
+        <li class="nav-item">
+          <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/ganzorig/">GitHub</a>
+        </li>
+      </ul>
+      
     </div>
   </div>
 </div>

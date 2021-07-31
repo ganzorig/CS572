@@ -1,8 +1,12 @@
 <h1>Jobs</h1>
+<form class="d-flex" ng-submit="vm.search()">
+  <input class="form-control me-sm-2" type="text" placeholder="Search" ng-model="vm.search.keyword" autocapitalize="none">
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
 
-<div class="list-group">
+<div class="list-group mt-4">
   <li
-    ng-repeat="job in vm.jobs | orderBy: 'title'"
+    ng-repeat="job in vm.jobs | orderBy: 'title'| filter : vm.keyword"
     class="list-group-item list-group-item-action d-flex align-items-center"
   >
     <a class="list-group-item-action" href="/#!/jobs/{{job._id}}">
@@ -18,6 +22,7 @@
       Delete
     </button>
   </li>
+  <li class="list-group-item text-warning" ng-show="vm.jobs.length == 0">No jobs found</li>
 </div>
 
 
