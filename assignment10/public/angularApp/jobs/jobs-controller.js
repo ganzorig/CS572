@@ -38,8 +38,8 @@ function JobsController($location, JobsFactory, $window) {
       JobsFactory.addOneJob(vm.formJob)
         .then(function (response) {
           if (response.status === 200) {
-            // location.replace('/#!/jobs');
-            // location.reload();
+            $location.replace('/#!/jobs');
+            location.reload();
             console.log('Successfully added');
           }
         })
