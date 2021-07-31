@@ -118,7 +118,12 @@ const _updateJob = function (req, res, isFullUpdate) {
 
 module.exports.getAllJobs = function (req, res) {
   const response = {};
-  let additionalQuery;
+
+  // filter by last 6 months
+  const now = new Date();
+  const sixMonthAgo = new Date(now).setMonth(now.getMonth() - 6);
+  const priorSix = new Date(sixMonthAgo);
+  let additionalQuery = { postDate: { $gte: priorSix, $lt: new Date() } };
 
   let count = 5;
   let offset = 0;
@@ -137,7 +142,7 @@ module.exports.getAllJobs = function (req, res) {
   }
 
   if (req.query && req.query.search) {
-    additionalQuery = _searchQuery(req, res);
+    additionalQuery = { ...additionalQuery, ..._searchQuery(req, res) };
   }
 
   if (req.query && req.query.lat && req.query.lng) {
