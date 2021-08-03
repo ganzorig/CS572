@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="meanSneakers">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEAN SNEAKERS</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+  <main-header></main-header>
+  <main class="main-layout">
+    <div class="container">
+      <div ng-view></div>
+    </div>
+  </main>
+  <div class="footer">
+    <div class="container">
+      <div class="text-muted footer-content">
+        <a href="https://compro.mui.edu" target="_blank">
+          <img src="./images/compro-web-logo-442x112.webp" height="50" alt="MIU logo">
+        </a>
+        <small class="text-black-50 text-center">Front End using AngularJS. Created by Ganzorig Bayarsaikhan</small>
+      </div>
+    </div>
+  </div>
+  
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.min.js"></script>
+  <script src="node_modules/angular-jwt/dist/angular-jwt.min.js"></script>
+  
+  <script src="angularjs-app/app.js"></script>
+  <script src="angularjs-app/sneaker-list/sneakers-controller.js"></script>
+  <script src="angularjs-app/sneaker/sneaker-controller.js"></script>
+  <script src="angularjs-app/sneaker-edit/sneakers-edit-controller.js"></script>
+
+  <script src="angularjs-app/register/register-controller.js"></script>
+  <script src="angularjs-app/login/login-controller.js"></script>
+
+  <script src="angularjs-app/dataFactory/dataFactory.js"></script>
+  <script src="angularjs-app/usersFactory/users-factory.js"></script>
+  <script src="angularjs-app/authentication/auth-factory.js"></script>
+  <script src="angularjs-app/authentication/auth-interceptor.js"></script>
+
+  <script src="angularjs-app/header-directive/header-directive.js"></script>
+</body>
+</html>

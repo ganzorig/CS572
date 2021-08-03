@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-between mb-3">
+  <h1>Mean games</h1>
+  <button
+    ng-show="{{vm.isLoggedIn()}}"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Add a game
+  </button>
+</div>
+
+<div class="list-group">
+  <li
+  ng-repeat="game in vm.games | orderBy: name"
+  class="list-group-item d-flex align-items-center"
+>
+  <a class="list-group-item-action" href="/#!/games/{{game._id}}">
+    {{game.title}}
+  </a>
+  <div ng-show="{{vm.isLoggedIn()}}" class="d-flex">
+    <a class="btn btn-info btn-sm" href="/#!/games/edit/{{game._id}}"
+    >Edit</a
+  >
+  <button
+    class="btn btn-danger btn-sm ms-2"
+    ng-click="vm.deleteGame(game._id)"
+  >
+    Delete
+  </button>
+  </div>
+ 
+</li>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a new game</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div ng-show="{{vm.isLoggedIn()}}" class="modal-body">
+        <div ng-if="vm.message" class="alert alert-info mb-3" rol="alert">
+          {{vm.message}}
+        </div>
+        <form
+          name="vm.gameForm"
+          ng-submit="vm.addGame()"
+          class="horizontal-form"
+        >
+          <div class="form-group">
+            <label class="form-label">Title:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="title"
+              required
+              ng-model="vm.formGame.title"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Price:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="price"
+              ng-model="vm.formGame.price"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="year"
+              ng-model="vm.formGame.year"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rate:</label>
+            <input
+              class="form-control"
+              type="number"
+              name="rate"
+              ng-model="vm.formGame.rate"
+              pattern="[1-5]"
+            />
+            <small
+              class="form-text text-muted"
+              ng-show="vm.gameForm.rate.$dirty && vm.gameForm.rate.$invalid"
+              >Number between 1 and 5</small
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label">Min player: </label>
+            <input
+              class="form-control"
+              type="number"
+              name="minPlayer"
+              ng-model="vm.formGame.minPlayers"
+              pattern="[1-5][0-9]?"
+            />
+            <small
+              class="form-text text-muted"
+              ng-show="vm.gameForm.minPlayer.$dirty && vm.gameForm.minPlayer.$invalid"
+              >Number between 1 and 5</small
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max player:</label>
+            <input
+              class="form-control"
+              type="number"
+              name="maxPlayer"
+              ng-model="vm.formGame.maxPlayers"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Min age: </label>
+            <input
+              class="form-control"
+              type="number"
+              name="minAge"
+              ng-model="vm.formGame.minAge"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Designer:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="designer"
+              ng-model="vm.formGame.designer"
+            />
+          </div>
+
+          <button class="btn btn-success" type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

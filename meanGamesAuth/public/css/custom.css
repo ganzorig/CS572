@@ -1,0 +1,32 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f4f4f4;
+  padding: 3px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-layout {
+  padding: 80px 0;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.horizontal-form .form-group {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.horizontal-form .form-group label {
+  flex-basis: 160px;
+}
+

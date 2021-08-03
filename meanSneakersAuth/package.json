@@ -1,0 +1,28 @@
+{
+  "name": "assignment9",
+  "version": "1.0.0",
+  "description": "MEAN sneakers CRUD app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CRUD",
+    "mongoose",
+    "meanSneakers",
+    "express"
+  ],
+  "author": "Ganzorig Bayarsaikhan",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.8.2",
+    "angular-jwt": "^0.1.11",
+    "angular-route": "^1.8.2",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.3"
+  }
+}

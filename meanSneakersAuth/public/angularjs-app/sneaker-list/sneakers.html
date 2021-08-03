@@ -1,0 +1,149 @@
+<h1>Mean sneakers</h1>
+
+<div class="list-group">
+  <li
+    ng-repeat="sneaker in vm.sneakers | orderBy:  ['name', 'releaseYear']"
+    class="list-group-item list-group-item-action d-flex align-items-center"
+  >
+    <a class="list-group-item-action" href="/#!/sneakers/{{sneaker._id}}">
+      {{sneaker.name}}
+    </a>
+    <span ng-show="vm.isLoggedIn()" class="d-flex">
+      <a class="btn btn-info btn-sm" href="/#!/sneakers/edit/{{sneaker._id}}"
+        >Edit</a
+      >
+      <button
+        class="btn btn-danger btn-sm ms-2"
+        ng-click="vm.deleteSneaker(sneaker._id)"
+      >
+        Delete
+      </button>
+    </span>
+  </li>
+</div>
+
+<div class="card mt-4" ng-show="{{vm.isLoggedIn()}}">
+  <h5 class="card-header">Add a Sneaker</h5>
+  <div class="card-body">
+    <form
+      name="vm.sneakerForm"
+      ng-submit="vm.addSneaker()"
+      class="horizontal-form"
+    >
+      <p class="text-muted">
+        To add new sneaker fill in all the fields below: <br />
+      </p>
+      <div class="form-group">
+        <label class="form-label">Name:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="name"
+          required
+          ng-model="vm.formSneaker.name"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Brand:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="brand"
+          required
+          ng-model="vm.formSneaker.brand"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price:</label>
+        <input
+          class="form-control"
+          type="number"
+          name="price"
+          required
+          ng-model="vm.formSneaker.price"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Release Year:</label>
+        <div class="d-flex align-items-center w-100">
+          <input
+            class="form-control"
+            type="number"
+            name="releaseYear"
+            required
+            ng-model="vm.formSneaker.releaseYear"
+            ng-maxlength="4"
+            ng-minlength="4"
+            min="1900"
+            max="2021"
+          />
+          <span
+            class="form-text text-warning w-100 ms-3"
+            ng-show="vm.sneakerForm.releaseYear.$dirty && vm.sneakerForm.releaseYear.$invalid"
+          >
+            Year should be between 1900-2021.
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Size:</label>
+        <div class="d-flex align-items-center w-100">
+          <input
+            class="form-control"
+            type="number"
+            required
+            name="usSize"
+            ng-model="vm.formSneaker.usSize"
+            pattern="(?:[3-9]|1[0-8])"
+          />
+          <small
+            class="form-text text-warning w-100 ms-3"
+            ng-show="vm.sneakerForm.usSize.$dirty && vm.sneakerForm.usSize.$invalid"
+            >Size must be between 3 and 18</small
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Color:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="color"
+          required
+          ng-model="vm.formSneaker.color"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gender:</label>
+        <div class="d-flex align-items-center w-100">
+          <select
+            class="form-select"
+            name="gender"
+            required
+            ng-model="vm.formSneaker.gender"
+          >
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+          <small
+            class="w-100 ms-3 text-warning"
+            ng-show="vm.sneakerForm.$submitted || vm.sneakerForm.gender.$touched"
+          >
+            Select service
+          </small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description:</label>
+        <textarea
+          class="form-control"
+          name="description"
+          required
+          ng-model="vm.formSneaker.description"
+        ></textarea>
+      </div>
+
+      <button class="btn btn-success" type="submit">Add a sneaker</button>
+    </form>
+  </div>
+</div>
