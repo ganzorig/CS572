@@ -11,8 +11,15 @@ function GamesFactory($http) {
     login,
   };
 
-  function getAllGames(count) {
-    const paramString = count ? `?count=${count}` : '';
+  function getAllGames(count, keyword) {
+    const paramString = keyword
+      ? `?search=${keyword}`
+      : count
+      ? `?count=${count}`
+      : keyword & count
+      ? `?search=${keyword}&count=${count}`
+      : '';
+
     return $http
       .get('/api/games' + paramString)
       .then(complete)

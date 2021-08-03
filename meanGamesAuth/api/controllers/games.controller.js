@@ -1,9 +1,20 @@
 const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 
+const _searchQuery = function (req, res) {
+  const keyword = req.query.search;
+
+  const query = {
+    title: { $regex: keyword, $options: 'i' },
+  };
+
+  return query;
+};
+
 module.exports.gamesGetAll = function (req, res) {
   console.log('GET all games json');
   const response = {};
+  let searchQuery = {};
 
   let count = 5;
   let offset = 0;
@@ -21,7 +32,11 @@ module.exports.gamesGetAll = function (req, res) {
     response.message = { message: 'Offset and Count values should be numbers' };
   }
 
-  Game.find()
+  if (req.query && req.query.search) {
+    searchQuery = _searchQuery(req, res);
+  }
+
+  Game.find(searchQuery)
     .skip(offset)
     .limit(count)
     .exec(function (err, games) {

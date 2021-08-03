@@ -8,6 +8,16 @@ function GamesController($location, GamesFactory, AuthFactory) {
     vm.games = response.data;
   });
 
+  vm.search = {};
+
+  vm.search = function () {
+    GamesFactory.getAllGames(count, vm.search.keyword).then(function (
+      response
+    ) {
+      vm.games = response.data;
+    });
+  };
+
   vm.isLoggedIn = function () {
     return AuthFactory.authenticated;
   };
@@ -15,7 +25,6 @@ function GamesController($location, GamesFactory, AuthFactory) {
   vm.formGame = {};
 
   vm.addGame = function () {
-    console.log(vm.formGame);
     if (vm.gameForm.$valid) {
       GamesFactory.addOne(vm.formGame).then(function (response) {
         if (response.status === 200) {
