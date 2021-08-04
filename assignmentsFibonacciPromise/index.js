@@ -29,7 +29,7 @@ const child = new Promise((resolve, reject) => {
   );
 });
 
-// solution 1 using set timeout
+// solution 1 using promise
 console.log('1: Start');
 
 // promises
@@ -43,7 +43,7 @@ fib10
 
 console.log('3: End');
 
-// solution 2 using child process
+// solution 2 using child process with promise
 console.log('2.1: Start');
 
 // child process
