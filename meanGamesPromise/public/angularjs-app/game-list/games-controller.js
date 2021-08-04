@@ -26,13 +26,17 @@ function GamesController($location, GamesFactory, AuthFactory) {
 
   vm.addGame = function () {
     if (vm.gameForm.$valid) {
-      GamesFactory.addOne(vm.formGame).then(function (response) {
-        if (response.status === 200) {
-          vm.message = 'Successfully added a game';
-        } else {
-          vm.message = response.data.message;
-        }
-      });
+      GamesFactory.addOne(vm.formGame)
+        .then(function (response) {
+          if (response.status === 200) {
+            vm.message = 'Successfully added a game';
+          } else {
+            vm.message = response.data.message;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
   vm.deleteGame = function (gameId) {

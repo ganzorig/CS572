@@ -6,10 +6,14 @@ function GameEditController($routeParams, GamesFactory) {
   const vm = this;
   const gameId = $routeParams.gameId;
 
-  GamesFactory.getOneGame(gameId).then(function (response) {
-    vm.formGame = response.data;
-    console.log(response.data);
-  });
+  GamesFactory.getOneGame(gameId)
+    .then(function (response) {
+      vm.formGame = response.data;
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   vm.updateGame = function () {
     if (vm.gameForm.$valid) {
