@@ -25,6 +25,26 @@ const _addReview = function (req, res, game) {
     .catch(utils._errorHandler.bind(null, res));
 };
 
+const _selectGame = function (req, res, game) {
+  const gameId = req.params.gameId;
+  const response = {
+    status: 201,
+    message: game,
+  };
+
+  if (!game) {
+    console.log('Game id not found in database', id);
+    response.status = 404;
+    response.message = { message: 'Game ID not found' + gameId };
+  }
+
+  if (response.status === 201) {
+    _addReview(req, res, game);
+  } else {
+    res.status(response.status).json(response.message);
+  }
+};
+
 const _sendBackReviews = function (req, res, game) {
   const gameId = req.params.gameId;
   const response = { status: 200, message: {} };
@@ -62,7 +82,6 @@ module.exports.reviewGetAll = function (req, res) {
 
 module.exports.reviewGetOne = function (req, res) {
   const gameId = req.params.gameId;
-  const reviewId = req.params.reviewId;
 
   Game.findById(gameId)
     .exec()
@@ -75,27 +94,9 @@ module.exports.reviewAdd = function (req, res) {
 
   Game.findById(gameId)
     .select('reviews')
-    .exec(function (err, game) {
-      const response = {
-        status: 201,
-        message: game,
-      };
-
-      if (err) {
-        response.status = 500;
-        response.message = err;
-      } else if (!game) {
-        console.log('Game id not found in database', id);
-        response.status = 404;
-        response.message = { message: 'Game ID not found' + gameId };
-      }
-
-      if (response.status === 201) {
-        _addReview(req, res, game);
-      } else {
-        res.status(response.status).json(response.message);
-      }
-    });
+    .exec()
+    .then((game) => _selectGame(req, res, game))
+    .catch(utils._errorHandler.bind(null, res));
 };
 
 const _updateReviewProperties = function (req, game, isFullUpdate) {
@@ -171,14 +172,26 @@ const _deleteReview = function (req, res, game) {
   const review = game.reviews.id(reviewId);
 
   review.remove();
-  game.save(function (err, game) {
-    const response = { status: 204, message: game };
-    if (err) {
-      response.status = 500;
-      response.message = err;
-    }
+
+  game
+    .save()
+    .then((game) => {
+      res.status(204).json(game);
+    })
+    .catch(utils._errorHandler.bind(null, res));
+};
+
+const _reviewDelete = function (req, res, game) {
+  const response = { status: 204 };
+  if (!game) {
+    response.status = 404;
+    response.message = { message: 'Game not found given ID' };
+  }
+  if (response.status !== 204) {
     res.status(response.status).json(response.message);
-  });
+  } else {
+    _deleteReview(req, res, game);
+  }
 };
 
 module.exports.reviewDelete = function (req, res) {
@@ -187,19 +200,7 @@ module.exports.reviewDelete = function (req, res) {
 
   Game.findById(gameId)
     .select('-publisher')
-    .exec(function (err, game) {
-      const response = { status: 204 };
-      if (err) {
-        response.status = 500;
-        response.message = err;
-      } else if (!game) {
-        response.status = 404;
-        response.message = { message: 'Game not found given ID' };
-      }
-      if (response.status !== 204) {
-        res.status(response.status).json(response.message);
-      } else {
-        _deleteReview(req, res, game);
-      }
-    });
+    .exec()
+    .then((game) => _reviewDelete(req, res, game))
+    .catch(utils._errorHandler.bind(null, res));
 };

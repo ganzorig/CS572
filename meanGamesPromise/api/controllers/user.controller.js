@@ -71,6 +71,7 @@ module.exports.authenticate = function (req, res, next) {
 
   if (headerAuth) {
     const token = headerAuth.split(' ')[1];
+    // jwt has no promise
     jwt.verify(token, process.env.PASS_PHRASE, function (err, decoded) {
       if (err) {
         res.status(400).json({ message: err });
