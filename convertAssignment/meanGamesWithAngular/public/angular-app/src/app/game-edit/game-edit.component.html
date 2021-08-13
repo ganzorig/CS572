@@ -1,0 +1,114 @@
+<div class="card mt-4">
+  <h5 class="card-header">Edit game</h5>
+  <div class="card-body">
+    <!-- reactive form -->
+    <form
+      [formGroup]="gameForm"
+      (ngSubmit)="gameSave()"
+      class="horizontal-form"
+    >
+      <div class="form-group">
+        <label class="form-label">Title:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="title"
+          required="true"
+          formControlName="title"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price:</label>
+        <input
+          class="form-control"
+          type="number"
+          step="any"
+          name="price"
+          formControlName="price"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Year:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="year"
+          formControlName="year"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Rate:</label>
+        <input
+          class="form-control"
+          type="number"
+          name="rate"
+          formControlName="rate"
+          pattern="[1-5]"
+        />
+        <small
+          class="form-text text-warning w-100 ms-3"
+          *ngIf="
+            gameForm.controls['rate'].invalid && gameForm.controls['rate'].dirty
+          "
+          >Number between 1 and 5</small
+        >
+      </div>
+      <div class="form-group">
+        <label class="form-label">Min player: </label>
+        <input
+          class="form-control"
+          type="number"
+          name="minPlayer"
+          formControlName="minPlayers"
+          pattern="[1-9]"
+        />
+        <small
+          class="form-text text-warning w-100 ms-3"
+          *ngIf="
+            gameForm.controls['minPlayers'].invalid &&
+            gameForm.controls['minPlayers'].dirty
+          "
+          >Number between 1 and 9</small
+        >
+      </div>
+      <div class="form-group">
+        <label class="form-label">Max player:</label>
+        <input
+          class="form-control"
+          type="number"
+          name="maxPlayer"
+          formControlName="maxPlayers"
+          pattern="[1-9]"
+        />
+        <small
+          class="form-text text-warning w-100 ms-3"
+          *ngIf="
+            gameForm.controls['maxPlayers'].invalid &&
+            gameForm.controls['maxPlayers'].dirty
+          "
+          >Number between 1 and 9</small
+        >
+      </div>
+      <div class="form-group">
+        <label class="form-label">Min age: </label>
+        <input
+          class="form-control"
+          type="number"
+          name="minAge"
+          formControlName="minAge"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Designer:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="designer"
+          formControlName="designer"
+        />
+      </div>
+
+      <button class="btn btn-success" type="submit">Save</button>
+    </form>
+  </div>
+</div>

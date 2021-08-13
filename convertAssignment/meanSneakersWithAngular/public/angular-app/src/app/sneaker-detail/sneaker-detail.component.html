@@ -1,0 +1,129 @@
+<div class="d-flex w-100 justify-content-between align-items-center">
+  <h1>{{ sneaker.name }}</h1>
+</div>
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title">Price</h4>
+      <div class="lead">{{ sneaker.price | currency }}</div>
+    </div>
+    <p class="card-text text-muted">{{ sneaker.description }}</p>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Brand
+      <span class="badge bg-light rounded-pill">{{ sneaker.brand }}</span>
+    </li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Release year
+      <span class="badge bg-info rounded-pill">{{ sneaker.releaseYear }}</span>
+    </li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Color
+      <span class="badge bg-primary rounded-pill">{{ sneaker.color }}</span>
+    </li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Size
+      <span class="badge bg-warning rounded-pill">{{ sneaker.usSize }}</span>
+    </li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Gender
+      <span class="badge bg-dark rounded-pill">{{ sneaker.gender }}</span>
+    </li>
+  </ul>
+
+  <div
+    *ngIf="sneaker.images.length > 0"
+    class="card-footer text-muted sneaker-images"
+  >
+    <img src="{{ image }}" *ngFor="let image of sneaker.images" />
+  </div>
+</div>
+
+<div class="card mb-3" *ngIf="sneaker.reviews.length > 0">
+  <h5 class="card-header">Reviews</h5>
+  <ul class="list-group">
+    <li *ngFor="let review of sneaker.reviews" class="list-group-item">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">
+          {{ review.title }}
+          <span
+            class="text-warning"
+            *ngFor="
+              let star of _convertStarsArray(review.rate);
+            "
+            >&#9733;</span
+          >
+        </h6>
+        <small>{{ review.date | date: "MMM-dd-yyyy, hh:mm" }}</small>
+      </div>
+      <p class="mb-1 text-muted">{{ review.review }}</p>
+    </li>
+  </ul>
+</div>
+
+
+<div class="card mt-4">
+  <h5 class="card-header">Add a Review</h5>
+  
+  <div class="card-body">
+   
+    <form
+      [formGroup]="reviewForm"
+      (ngSubmit)="reviewSave()"
+      class="horizontal-form"
+    >
+      <div class="form-group">
+        <label class="form-label">Title:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="title"
+          required
+          formControlName="title"
+        />
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Rate:</label>
+        <div class="d-flex align-items-center w-100">
+          <select
+            class="form-select"
+            name="rate"
+            required
+            formControlName="rate"
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+         
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Review:</label>
+        <textarea
+          class="form-control"
+          name="review"
+          required
+          formControlName="review"
+        ></textarea>
+      </div>
+
+      <button class="btn btn-success" type="submit">Add a review</button>
+    </form>
+  </div>
+</div>

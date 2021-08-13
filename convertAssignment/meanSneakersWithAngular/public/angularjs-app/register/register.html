@@ -1,0 +1,57 @@
+<h1>Register</h1>
+
+<div ng-if="vm.err" class="alert alert-danger" rol="alert">{{vm.err}}</div>
+
+<div ng-if="vm.message" class="alert alert-success" rol="alert">
+  {{vm.message}}
+</div>
+<form name="vm.registerForm" ng-submit="vm.register()">
+  <div class="form-group mb-3">
+    <label for="user-name">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="user-name"
+      ng-model="vm.user.username"
+      required
+    />
+  </div>
+  <div class="form-group mb-3">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      ng-model="vm.user.name"
+      required
+    />
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      ng-model="vm.user.password"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="repeat-password">Repeat Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="repeat-password"
+      ng-model="vm.user.repeatPassword"
+      required
+    />
+  </div>
+  <button
+    ng-disabled="vm.registerForm.$invalid"
+    type="submit"
+    class="btn btn-success mt-3"
+  >
+    Register
+  </button>
+</form>

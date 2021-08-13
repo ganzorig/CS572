@@ -1,0 +1,100 @@
+<div
+  ng-controller="LoginController as vm"
+  class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+>
+  <div class="container">
+    <a href="/" class="navbar-brand">meanGames</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#!/games?count=0">All games</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/games">Latest games</a>
+        </li>
+        <li ng-show="vm.isLoggedIn()" class="nav-item">
+          <a class="nav-link" href="#!/profile">Profile</a>
+        </li>
+        <li ng-hide="vm.isLoggedIn()" class="nav-item">
+          <a class="nav-link" href="#!/register">Register</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-md-auto">
+        <div class="d-flex">
+          <form
+            ng-if="!vm.isLoggedIn()"
+            class="d-flex navbar-right"
+            role="login"
+            ng-submit="vm.login()"
+          >
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control input-sm"
+                placeholder="Username"
+                ng-model="vm.credentials.username"
+                autocapitalize="none"
+              />
+            </div>
+            <div class="form-group ms-2">
+              <input
+                type="password"
+                class="form-control input-sm"
+                placeholder="Password"
+                ng-model="vm.credentials.password"
+                autocapitalize="none"
+              />
+            </div>
+            <button type="submit" class="btn btn-sm btn-success ms-2">
+              Login
+            </button>
+          </form>
+          <ul
+            ng-if="vm.isLoggedIn()"
+            class="navbar-nav navbar-right d-flex align-items-center"
+          >
+            <li>
+              <span class="navbar-text"
+                >Welcome <strong>{{vm.loggedInUser}}</strong></span
+              >
+            </li>
+            <li>
+              <button class="ms-2 btn btn-sm btn-info" ng-click="vm.logout()">
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </ul>
+    </div>
+  </div>
+  <div
+    ng-if="vm.err"
+    class="position-fixed bottom-0 end-0 p-3"
+    style="z-index: 11"
+  >
+    <div
+      id="liveToast"
+      class="toast show text-white bg-danger border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="toast-header">
+        <strong class="me-auto">Error</strong>
+      </div>
+      <div class="toast-body">{{vm.err}}</div>
+    </div>
+  </div>
+</div>

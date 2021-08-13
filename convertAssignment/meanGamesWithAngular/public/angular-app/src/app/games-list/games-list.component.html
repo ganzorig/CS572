@@ -1,0 +1,218 @@
+
+<h1>Mean games</h1>
+<form class="d-flex mb-4" (ngSubmit)="onSearch()">
+  <input
+    class="form-control me-sm-2"
+    type="text"
+    placeholder="Search"
+    [(ngModel)]="keyword"
+    [ngModelOptions]="{standalone: true}"
+    autocapitalize="none"
+  />
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+<div class="list-group">
+  <li
+    *ngFor="let game of games"
+    class="list-group-item d-flex align-items-center"
+    [title]="game.title + ' details'"
+  >
+    <a class="list-group-item-action" [routerLink]="['/game', game._id]">
+      {{ game.title }}
+    </a>
+    <div class="d-flex">
+      <a class="btn btn-info btn-sm" [routerLink]="['/game/edit', game._id]">Edit</a>
+      <button class="btn btn-danger btn-sm ms-2" (click)="deleteGame(game._id)">
+        Delete
+      </button>
+    </div>
+  </li>
+</div>
+
+
+<div class="card mt-4" >
+  <h5 class="card-header">Add game</h5>
+  <div class="card-body">
+
+  <div *ngIf="!isValid" class="alert alert-warning mb-3" rol="alert">
+    Fill the all inputs
+  </div>
+<!-- reactive form -->
+<form [formGroup]="gameForm" (ngSubmit)="gameSave()" class="horizontal-form">
+  <div class="form-group">
+    <label class="form-label">Title:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="title"
+      required="true"
+      formControlName="title"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Price:</label>
+    <input
+      class="form-control"
+      type="number"
+      step="any"
+      name="price"
+      formControlName="price"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Year:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="year"
+      formControlName="year"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Rate:</label>
+    <input
+      class="form-control"
+      type="number"
+      name="rate"
+      formControlName="rate"
+      pattern="[1-5]"
+    />
+    <small
+      class="form-text text-warning w-100 ms-3" 
+      *ngIf="gameForm.controls['rate'].invalid && (gameForm.controls['rate'].dirty)"
+      >Number between 1 and 5</small
+    >
+  </div>
+  <div class="form-group">
+    <label class="form-label">Min player: </label>
+    <input
+      class="form-control"
+      type="number"
+      name="minPlayer"
+      formControlName="minPlayers"
+      pattern="[1-9]"
+    />
+    <small
+      class="form-text text-warning w-100 ms-3" 
+      *ngIf="gameForm.controls['minPlayers'].invalid && (gameForm.controls['minPlayers'].dirty)"
+      >Number between 1 and 9</small
+    >
+  </div>
+  <div class="form-group">
+    <label class="form-label">Max player:</label>
+    <input
+      class="form-control"
+      type="number"
+      name="maxPlayer"
+      formControlName="maxPlayers"
+      pattern="[1-9]"
+    />
+    <small
+      class="form-text text-warning w-100 ms-3" 
+      *ngIf="gameForm.controls['maxPlayers'].invalid && (gameForm.controls['maxPlayers'].dirty)"
+      >Number between 1 and 9</small
+    >
+  </div>
+  <div class="form-group">
+    <label class="form-label">Min age: </label>
+    <input
+      class="form-control"
+      type="number"
+      name="minAge"
+      formControlName="minAge"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Designer:</label>
+    <input class="form-control" type="text" name="designer"  formControlName="designer" />
+  </div>
+
+  <button class="btn btn-success" type="submit">Add</button>
+</form>
+
+</div>
+</div>
+
+
+
+<!-- template driven form -->
+<!-- <form name="gameForm" (ngSubmit)="onSubmit()" class="horizontal-form">
+  <div class="form-group">
+    <label class="form-label">Title:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="title"
+      required
+      [(ngModel)]="newGame.title"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Price:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="price"
+      [(ngModel)]="newGame.price"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Year:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="year"
+      [(ngModel)]="newGame.year"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Rate:</label>
+    <input
+      class="form-control"
+      type="number"
+      name="rate"
+      [(ngModel)]="newGame.rate"
+      
+    />
+    <small
+      class="form-text text-muted"
+      >Number between 1 and 5</small
+    >
+  </div>
+  <div class="form-group">
+    <label class="form-label">Min player: </label>
+    <input
+      class="form-control"
+      type="number"
+      name="minPlayer"
+      [(ngModel)]="newGame.minPlayers"
+      
+    />
+    <small
+      class="form-text text-muted"
+      
+      >Number between 1 and 5</small
+    >
+  </div>
+  <div class="form-group">
+    <label class="form-label">Max player:</label>
+    <input
+      class="form-control"
+      type="number"
+      name="maxPlayer"
+      [(ngModel)]="newGame.maxPlayers"
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Min age: </label>
+    <input
+      class="form-control"
+      type="number"
+      name="minAge"
+      [(ngModel)]="newGame.minAge"
+    />
+  </div>
+
+
+  <button class="btn btn-success" type="submit">Add</button>
+</form> -->

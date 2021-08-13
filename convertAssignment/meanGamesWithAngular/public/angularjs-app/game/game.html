@@ -1,0 +1,55 @@
+<div class="d-flex w-100 justify-content-between align-items-center">
+  <h1>{{vm.game.title}}</h1>
+  <game-rating></game-rating>
+</div>
+<div class="card mb-3">
+
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title">Price</h4>
+      <div class="lead">{{vm.game.price | currency}}</div>
+    </div>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Release year
+      <span class="badge bg-light rounded-pill">{{vm.game.year}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Minimum players to play
+      <span class="badge bg-primary rounded-pill">{{vm.game.minPlayers}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Maximum players to play
+      <span class="badge bg-primary rounded-pill">{{vm.game.maxPlayers}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Min Age
+      <span class="badge bg-warning rounded-pill">{{vm.game.maxPlayers}}</span>
+    </li>
+  </ul>
+  <div class="card-body" ng-if="vm.game.publisher">
+    <h5 class="card-title">Publisher</h5>
+    <div class="card-subtitle text-muted">Published by
+      <strong class="text-success">{{vm.game.publisher.name}}</strong>
+    </div>
+  </div>
+  <div class="card-footer text-muted">
+    Designed by: <span ng-repeat="designer in vm.game.designers">{{designer}} <span>
+  </div>
+</div>
+
+<div class="card mb-3" ng-if="vm.game.reviews.length > 0">
+  <h5 class="card-header">Reviews</h5>
+  <ul class="list-group">
+    <li ng-repeat="review in vm.game.reviews" class="list-group-item">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">{{review.name}}</h6>
+        <small>{{review.date | date}}</small>
+      </div>
+      <p class="mb-1 text-muted">{{review.review}}</p>
+    </li>
+  </ul>
+
+ 
