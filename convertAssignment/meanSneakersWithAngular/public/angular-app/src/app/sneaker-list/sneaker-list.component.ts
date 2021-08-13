@@ -75,8 +75,6 @@ export class SneakerListComponent implements OnInit {
 
   public sneakerSave() {
     this.isValid = this.sneakerForm.valid;
-
-    console.log(this.sneakerForm);
     
     if(this.sneakerForm.valid) {
       this.sneakerService

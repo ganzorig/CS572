@@ -55,8 +55,6 @@ export class SneakerEditComponent implements OnInit {
   private receivedSneaker(sneaker: Sneaker) {
     this._sneaker = sneaker;
     this.sneakerForm.patchValue(sneaker);
-
-    //this.sneakerForm.patchValue({ designer: game.designers[0] });
   }
 
   public sneakerSave() {

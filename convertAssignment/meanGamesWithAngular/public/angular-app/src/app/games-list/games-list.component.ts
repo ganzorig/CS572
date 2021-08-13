@@ -42,7 +42,6 @@ export class GamesListComponent implements OnInit {
     this.gamesService
       .getGames(count, '')
       .then((response) => {
-
         this._games = response;
       })
       .catch((error) => console.log(error));

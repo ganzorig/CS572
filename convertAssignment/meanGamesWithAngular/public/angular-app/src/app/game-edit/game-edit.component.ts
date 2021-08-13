@@ -53,7 +53,6 @@ export class GameEditComponent implements OnInit {
 
   private receivedGame(game: Game) {
     this._game = game;
-    console.log(game.designers);
     this.gameForm.patchValue(game);
 
     this.gameForm.patchValue({ designer: game.designers[0] });
